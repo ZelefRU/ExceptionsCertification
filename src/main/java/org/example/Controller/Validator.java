@@ -8,7 +8,13 @@ import java.util.regex.Pattern;
 
 public class Validator {
 
-    public static void checkNumber(long number) throws PhoneNumberFormatException {
+    public static void checkNumber(String input) throws PhoneNumberFormatException {
+        long number;
+        try {
+            number = Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            throw new PhoneNumberFormatException("Не удалось преобразовать номер в число, проверьте что номер не содержит лишних символов, кроме + в начале");
+        }
         if (number <= 10000000000L || number >= 100000000000L) {
             throw new PhoneNumberFormatException("Номер должен содержать 11 цифр!");
         }
@@ -69,7 +75,4 @@ public class Validator {
             throw new DataArgumentCountFormatException("Количество аргументов должно быть равным 6. Используйте пробелы только для разделения аргументов!");
         }
     }
-
-
-
 }

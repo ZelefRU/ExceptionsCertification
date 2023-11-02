@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.Exceptions.*;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import static org.example.Controller.InputCorrectnessChecker.inputCorrectnessChecking;
@@ -25,12 +26,10 @@ public class View {
             System.out.println(input);
 
             try {
-                boolean correct = inputCorrectnessChecking(input);
-            } catch (DataArgumentCountFormatException e) {
+                inputCorrectnessChecking(input);
+            } catch (DataArgumentCountFormatException | IOException e) {
                 throw new RuntimeException(e);
             }
-
-
         }
     }
 

@@ -3,6 +3,10 @@ package org.example.Controller;
 import org.example.Exceptions.*;
 import org.example.Model.User;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import static org.example.Controller.Validator.*;
 import static org.example.Controller.Validator.checkName;
 
@@ -14,7 +18,7 @@ public class InputCorrectnessChecker {
      * @param input Ввод пользователя
      * @return Булево значение (true/false)
      */
-    public static boolean inputCorrectnessChecking(String input) throws DataArgumentCountFormatException {
+    public static void inputCorrectnessChecking(String input) throws DataArgumentCountFormatException, IOException {
         // Разбиваем строку на части
         String[] parts = input.split(" ");
 
@@ -30,8 +34,8 @@ public class InputCorrectnessChecker {
                 for (String part : parts) {
                     // Получение и проверка номера
                     if (part.startsWith("+")) {
+                        checkNumber(part.substring(1));
                         long number = Long.parseLong(part.substring(1));
-                        checkNumber(number);
                         user.setNumber(number);
                         System.out.println("Number: +" + number);
                     }
@@ -51,13 +55,13 @@ public class InputCorrectnessChecker {
                         switch (fullNamePartsCounter++) {
                             case 0 -> {
                                 checkName(part);
-                                user.setName(part);
-                                System.out.println("Name: " + part);
+                                user.setLastName(part);
+                                System.out.println("Last Name: " + part);
                             }
                             case 1 -> {
                                 checkName(part);
-                                user.setLastName(part);
-                                System.out.println("Last Name: " + part);
+                                user.setName(part);
+                                System.out.println("Name: " + part);
                             }
                             case 2 -> {
                                 checkName(part);
@@ -72,9 +76,6 @@ public class InputCorrectnessChecker {
                 throw new RuntimeException(e);
             }
         }
-        System.out.println(user);
-        return false;
+        Writer.write(user);
     }
-
-
 }
